@@ -1,19 +1,20 @@
-```yaml
+---
 title: <short descriptive title>
 authors: [<github-handle>]
 approvers: [<github-handle>, <github-handle>]   # expected approvers, not proof
 target-milestone: <e.g. Atlas Q3>
 supersedes: []                                   # issue numbers of specs this replaces
 tasks: []                                        # task issue numbers, backfilled after decomposition
-```
+---
 
 <!--
   TEMPLATE — the parent design spec. Posted as a GitHub issue titled "[Spec] <title>".
-  The GitHub issue is the source of truth once posted. The fenced `yaml` block above is
-  machine-readable metadata — keep it a ```yaml fence (not a bare `---` frontmatter block,
-  which GitHub renders as a giant heading inside an issue). `approvers` are the EXPECTED
-  reviewers (not proof of approval — the `approved` label set by the Action is); `tasks` is
-  backfilled by slice-to-subissues after decomposition.
+  The GitHub issue is the source of truth once posted. The metadata above is standard
+  `---` YAML frontmatter in the local .scratch/ draft (so editors and YAML tooling
+  recognize it); post-spec converts it to a fenced yaml block when it publishes the
+  issue, because GitHub renders a bare `---` block as a giant heading. `approvers` are
+  the EXPECTED reviewers (not proof of approval — the `approved` label set by the Action
+  is); `tasks` is backfilled by slice-to-subissues after decomposition.
 
   Fill every section. The required sections below exist to satisfy the 6 SDD
   requirements: enough context for an agent to build blind, a captured decision +

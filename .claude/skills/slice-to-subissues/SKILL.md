@@ -46,21 +46,24 @@ Matt Pocock's `to-issues`.)
    approves. Don't create issues against an unconfirmed split.
 
 5. **Fill one `task.md` per slice.** Build each task body from this skill's `task.md` template, following
-   the template's own section guidance (don't restate it here). Set the frontmatter (the template's
-   ` ```yaml ` metadata block — keep it fenced, not a bare `---` block): `title`, `spec-issue`
-   (the parent issue number), `blocked-by` (issue numbers — filled as blockers are created in step 6), and
-   leave `verified-by: unit`. Back-link the **Parent** section to the spec issue by number. Tasks have no
-   own id — each task's GitHub issue number is its identity.
+   the template's own section guidance (don't restate it here). Set the frontmatter (standard `---` YAML in
+   the local draft): `title`, `spec-issue` (the parent issue number), `blocked-by` (issue numbers — filled as
+   blockers are created in step 6), and leave `verified-by: unit`. Back-link the **Parent** section to the
+   spec issue by number. Tasks have no own id — each task's GitHub issue number is its identity.
 
 6. **Push tasks in dependency order.** Create blockers first so you can reference real issue numbers in
-   dependents' `blocked-by`. For each:
+   dependents' `blocked-by`. For each task, first **fence its frontmatter** the same way `post-spec` does —
+   convert the leading `---` frontmatter delimiters to a ` ```yaml ` block so the issue renders cleanly
+   (the local draft keeps its `---`); everything else stays byte-for-byte:
 
-   ```sh
+   ````sh
+   awk 'NR==1 && $0=="---"{print "```yaml"; f=1; next}
+        f && $0=="---"{print "```"; f=0; next} {print}' <task-path> > <body-path>
    gh issue create \
      --title "[Task] <title>" \
-     --body-file <task-path> \
+     --body-file <body-path> \
      --label "task"
-   ```
+   ````
 
    (Add `--repo <owner>/<repo>` if not in the target repo.) After a blocker is created, fill its real issue
    number into the dependents' `blocked-by` before creating them.
