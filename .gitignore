@@ -1,0 +1,7 @@
+# Spec drafts live here until /post-spec publishes them as the canonical issue.
+# They are deliberately uncommitted — once posted, the GitHub issue is the source of truth.
+.scratch/
+
+node_modules/
+*.log
+.DS_Store

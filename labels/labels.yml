@@ -1,0 +1,33 @@
+# SDD label vocabulary.
+#
+# This is the contract the skills key off. Enforcement (the GitHub Action that
+# applies `approved` and closes issues on merge) is DEFERRED — but the vocabulary
+# is fixed now so skills can reference stable names.
+#
+# Apply to a repo with a label-sync tool, e.g.:
+#   gh label create <name> --color <color> --description "<desc>"
+# or github-label-sync against this file.
+
+# --- Issue species -----------------------------------------------------------
+- name: spec
+  color: "5319e7"
+  description: A design spec (parent). Title prefixed [Spec].
+
+- name: task
+  color: "1d76db"
+  description: A vertical-slice sub-issue of a spec. Title prefixed [Task].
+
+# --- Spec lifecycle ----------------------------------------------------------
+- name: needs-approval
+  color: "fbca04"
+  description: Spec is posted and awaiting reviewer approval. Set by post-spec.
+
+- name: question
+  color: "d93f0b"
+  description: A reviewer raised concerns that the author must address. Set by review-spec.
+
+- name: approved
+  color: "0e8a16"
+  description: >-
+    Spec is approved and frozen. RESERVED for the approval GitHub Action
+    (triggered by /approve or 👍). Never set by a skill or by hand.
