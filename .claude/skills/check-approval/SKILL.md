@@ -36,5 +36,5 @@ checks before treating a spec as buildable — the whole point of the `approved`
 ## Notes
 
 - Read-only. Never applies or removes the `approved` label — that is reserved for the approval Action.
-- Trust **only** the label. Do not infer approval from a `/approve` comment or a 👍 reaction; those are
-  signals the Action consumes, not proof on their own.
+- Trust **only** the label. Do not infer approval from a `/approve` comment; that's the signal the Action
+  consumes, not proof on its own.

@@ -7,8 +7,8 @@ allowed-tools: Bash(gh issue view:*)
 
 # pull-comments
 
-Fetch the comments (and reactions) on a GitHub issue and present them as structured,
-locatable text. This is a thin, deterministic `gh` wrapper — it reads only, never writes.
+Fetch the comments on a GitHub issue and present them as structured, locatable text.
+This is a thin, deterministic `gh` wrapper — it reads only, never writes.
 
 ## Process
 
@@ -27,15 +27,12 @@ locatable text. This is a thin, deterministic `gh` wrapper — it reads only, ne
    - **Header:** `#<number> <title>` · state · labels (flag `needs-approval`, `question`, `approved`).
    - **Each comment**, numbered, with:
      - author + `createdAt`
-     - reaction summary from `reactionGroups` — call out 👍 (`THUMBS_UP`) explicitly, since 👍 is an approval signal
-     - the comment **body verbatim**, preserving any `> blockquote` lines (reviewers quote the spec
-       section they're flagging via `review-spec`, so the quote is how the author locates what to fix)
+     - the comment **body verbatim**, preserving any `> blockquote` lines (reviewers quote the spec section
+       they're flagging, so the quote is how the author locates what to fix)
 
-4. **Surface approval signals, but do not act on them.** If a comment body is `/approve` or carries a 👍,
-   note it as an approval *signal*. Actual approval is the `approved` label set by the Action — checked by
-   `check-approval`, never inferred here.
+4. **Surface approval signals, but do not act on them.** Note any `/approve` comment as an approval *signal*.
+   Actual approval is the `approved` label set by the Action — checked by `check-approval`, never inferred here.
 
 ## Notes
 
 - Read-only. This command does not edit, reply, resolve, or label anything.
-- `reactionGroups` per comment is available in the `comments` JSON; use it for the reaction summary.

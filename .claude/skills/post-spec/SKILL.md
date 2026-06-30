@@ -43,7 +43,7 @@ result. Don't re-implement the mechanics in prose or inline `gh` calls — call 
    **draft**, and re-run — don't try to force the post past validation.
 
 4. **Report.** Print the new issue URL the script returned. Next step: reviewers run `review-spec`; the author
-   does **not** set `approved` — that's the Action, triggered by `/approve` or 👍.
+   does **not** set `approved` — that's the Action, triggered by a reviewer's `/approve` comment.
 
 ## Notes
 

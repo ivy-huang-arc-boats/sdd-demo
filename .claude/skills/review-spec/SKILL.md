@@ -73,8 +73,8 @@ what each concern refers to. This skill **never approves**; approval is the Acti
 
 ## Notes
 
-- **Never approves.** This skill files concerns and sets `question`; it never sets `approved`, never closes
-  the issue, and never reads or acts on 👍 — approval is the Action's, signalled by an `/approve` comment.
+- **Never approves.** This skill files concerns and sets `question`; it never sets `approved` and never closes
+  the issue — approval is the Action's, signalled by a reviewer's `/approve` comment.
 - Read the issue body fresh each run; don't review a stale `.scratch/` draft.
 - Quote excerpts verbatim — a paraphrased quote breaks `address-comments`' ability to locate the spot.
 - Design critique, not code review: judge whether the spec is a sufficient, reviewable contract, not the

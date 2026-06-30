@@ -30,8 +30,8 @@ Decide the slices and `blocked-by` yourself; let the scripts publish them the sa
 
 1. **Gate on approval first.** Delegate to **`check-approval <issue>`**. If the verdict is not APPROVED,
    refuse and stop — report the labels it found so the author knows where the spec sits. Trust only that
-   verdict; never infer approval from a `/approve` comment or 👍. Slicing an unapproved spec builds against
-   a moving target.
+   verdict; never infer approval from a `/approve` comment. Slicing an unapproved spec builds against a
+   moving target.
 
 2. **Pull the canonical spec body.** Re-pull from the issue — the issue is the source of truth, not any
    stale `.scratch/` draft:

@@ -52,8 +52,7 @@ the human, fold accepted changes into the issue body, and hand the spec back for
    `reject` dispositions change no text — they're recorded only as a reply (step 5).
 
 5. **Post a quoted reply per comment.** For each comment, post a reply that quotes the reviewer's point and
-   states the disposition, mirroring how `review-spec` quoted its findings so each disposition is
-   locatable:
+   states the disposition, so each disposition is locatable:
 
    ```
    > <the reviewer's point, quoted>
@@ -82,4 +81,3 @@ the human, fold accepted changes into the issue body, and hand the spec back for
   approval Action, triggered by a reviewer's `/approve`.
 - Edits target the **live issue body** every time — re-pull (step 2) before editing; never edit from a
   `.scratch/` draft, which is stale once `post-spec` published.
-- Comment fetching belongs to `pull-comments`; don't duplicate it here.

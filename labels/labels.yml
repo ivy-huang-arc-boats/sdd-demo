@@ -30,4 +30,4 @@
   color: "0e8a16"
   description: >-
     Spec is approved and frozen. RESERVED for the approval GitHub Action
-    (triggered by /approve or 👍). Never set by a skill or by hand.
+    (triggered by an /approve comment). Never set by a skill or by hand.
