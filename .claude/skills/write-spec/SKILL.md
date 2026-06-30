@@ -28,7 +28,8 @@ skill's `spec.md` template exactly. The output is a **draft file, never a posted
    Name the file with a slug, e.g. `.scratch/email-login.md` — the draft has no id yet; the GitHub issue
    number becomes its identity once `post-spec` publishes it.
 
-   Fill the **frontmatter**, resolving each value rather than leaving the template's placeholder:
+   Fill the **frontmatter** (the template's ` ```yaml ` metadata block — keep it fenced, not a bare `---`
+   block), resolving each value rather than leaving the template's placeholder:
    `title`, `authors` (default the current user), `approvers` (ask if unstated — they become assignees at
    post time), `target-milestone` (ask if unstated), `supersedes` (issue numbers of any specs this
    replaces), and `tasks: []` (`slice-to-subissues` backfills it). There is no `spec-id` — the issue number

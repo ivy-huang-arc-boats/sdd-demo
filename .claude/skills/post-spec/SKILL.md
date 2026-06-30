@@ -20,7 +20,9 @@ After this runs, **the issue is the source of truth** — the local draft is no 
 1. **Resolve the draft.** The argument is the path to a `.scratch/` markdown file. If omitted, use the
    most recent `.scratch/*.md` and confirm with the user before posting.
 
-2. **Read the frontmatter and validate.** Parse the YAML frontmatter and extract `title` and `approvers`.
+2. **Read the frontmatter and validate.** Parse the YAML metadata block at the top of the draft (a fenced
+   ` ```yaml ` block — not a bare `---` block, which GitHub renders as a giant heading in an issue) and
+   extract `title` and `approvers`.
    Refuse to post and report what's wrong if any of these hold:
    - `title` is empty or still the `<short descriptive title>` placeholder.
    - `approvers` is empty or still contains `<github-handle>` placeholders.
@@ -29,7 +31,8 @@ After this runs, **the issue is the source of truth** — the local draft is no 
    A spec posts only when it's actually fillable; posting placeholders wastes reviewers' time.
 
 3. **Create the issue.** Title is the frontmatter `title` with a `[Spec] ` prefix; body is the draft
-   verbatim (frontmatter included — it's machine-readable metadata). Label `spec` + `needs-approval`.
+   verbatim (the ` ```yaml ` metadata block included — it's machine-readable metadata that renders cleanly).
+   Label `spec` + `needs-approval`.
    Assign the `approvers` as assignees:
 
    ```sh

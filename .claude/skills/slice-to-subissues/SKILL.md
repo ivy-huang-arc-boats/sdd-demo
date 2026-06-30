@@ -46,7 +46,8 @@ Matt Pocock's `to-issues`.)
    approves. Don't create issues against an unconfirmed split.
 
 5. **Fill one `task.md` per slice.** Build each task body from this skill's `task.md` template, following
-   the template's own section guidance (don't restate it here). Set the frontmatter: `title`, `spec-issue`
+   the template's own section guidance (don't restate it here). Set the frontmatter (the template's
+   ` ```yaml ` metadata block — keep it fenced, not a bare `---` block): `title`, `spec-issue`
    (the parent issue number), `blocked-by` (issue numbers — filled as blockers are created in step 6), and
    leave `verified-by: unit`. Back-link the **Parent** section to the spec issue by number. Tasks have no
    own id — each task's GitHub issue number is its identity.
@@ -65,8 +66,9 @@ Matt Pocock's `to-issues`.)
    number into the dependents' `blocked-by` before creating them.
 
 7. **Backfill the spec's `tasks:` frontmatter.** Re-pull the spec body (it may have changed since step 2),
-   set `tasks:` to the list of created issue numbers, and write it back with `gh issue edit <issue>
-   --body-file <updated>`. This is requirement-6 linkage — the spec now points at the work that implements it.
+   set `tasks:` to the list of created issue numbers (edit the `tasks:` line inside the ` ```yaml ` block —
+   leave the rest of the body untouched), and write it back with `gh issue edit <issue> --body-file
+   <updated>`. This is requirement-6 linkage — the spec now points at the work that implements it.
 
 8. **Report.** Print the created `[Task]` issue numbers and URLs in dependency order, and confirm the spec's
    `tasks:` was backfilled.
