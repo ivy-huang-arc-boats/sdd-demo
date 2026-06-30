@@ -7,8 +7,10 @@ allowed-tools:
   - Read
   - Write
   - Bash(gh issue view:*)
-  - Bash(gh issue create:*)
-  - Bash(gh issue edit:*)
+  - Bash(bash skills/slice-to-subissues/create-task.sh:*)
+  - Bash(bash .claude/skills/slice-to-subissues/create-task.sh:*)
+  - Bash(bash skills/slice-to-subissues/backfill-tasks.sh:*)
+  - Bash(bash .claude/skills/slice-to-subissues/backfill-tasks.sh:*)
 ---
 
 # slice-to-subissues
@@ -18,6 +20,11 @@ back-linked to the parent. This is the author-side step that runs **after approv
 design into grabbable work. The spec's Acceptance Criteria stay the e2e contract — tasks carry **unit tests
 only** and do not each re-prove the behavior end-to-end. (Arc-native; the decomposition mindset borrows from
 Matt Pocock's `to-issues`.)
+
+The **decomposition is yours** — judgment this skill can't script. The deterministic mechanics around it are
+scripted, in this skill's directory: **`create-task.sh`** (fence a task draft, create the `[Task]` issue, and
+link it as a native GitHub sub-issue of the spec) and **`backfill-tasks.sh`** (set the spec's `tasks:` list).
+Decide the slices and `blocked-by` yourself; let the scripts publish them the same way every time.
 
 ## Process
 
@@ -51,27 +58,26 @@ Matt Pocock's `to-issues`.)
    blockers are created in step 6), and leave `verified-by: unit`. Back-link the **Parent** section to the
    spec issue by number. Tasks have no own id — each task's GitHub issue number is its identity.
 
-6. **Push tasks in dependency order.** Create blockers first so you can reference real issue numbers in
-   dependents' `blocked-by`. For each task, first **fence its frontmatter** the same way `post-spec` does —
-   convert the leading `---` frontmatter delimiters to a ` ```yaml ` block so the issue renders cleanly
-   (the local draft keeps its `---`); everything else stays byte-for-byte:
+6. **Create tasks in dependency order, via the script.** Create blockers first so you can fill their real
+   issue numbers into dependents' `blocked-by` before those drafts are posted. For each task draft, run
+   (bundled path: `.claude/skills/slice-to-subissues/create-task.sh`):
 
-   ````sh
-   awk 'NR==1 && $0=="---"{print "```yaml"; f=1; next}
-        f && $0=="---"{print "```"; f=0; next} {print}' <task-path> > <body-path>
-   gh issue create \
-     --title "[Task] <title>" \
-     --body-file <body-path> \
-     --label "task"
-   ````
+   ```sh
+   bash skills/slice-to-subissues/create-task.sh <parent-spec-#> <task-draft-path> [owner/repo]
+   ```
 
-   (Add `--repo <owner>/<repo>` if not in the target repo.) After a blocker is created, fill its real issue
-   number into the dependents' `blocked-by` before creating them.
+   It fences the draft's frontmatter, creates the `[Task]` issue with the `task` label, links it as a native
+   sub-issue of the parent spec, and prints the new issue number — capture it for the next task's `blocked-by`.
+   *(`DRY_RUN=1 bash …` previews the fenced body and skips creation.)*
 
-7. **Backfill the spec's `tasks:` frontmatter.** Re-pull the spec body (it may have changed since step 2),
-   set `tasks:` to the list of created issue numbers (edit the `tasks:` line inside the ` ```yaml ` block —
-   leave the rest of the body untouched), and write it back with `gh issue edit <issue> --body-file
-   <updated>`. This is requirement-6 linkage — the spec now points at the work that implements it.
+7. **Backfill the spec's `tasks:` list, via the script.** Once all tasks exist:
+
+   ```sh
+   bash skills/slice-to-subissues/backfill-tasks.sh <spec-#> <n1,n2,n3,...> [owner/repo]
+   ```
+
+   It re-pulls the canonical spec body and edits **only** the `tasks:` line inside its ` ```yaml ` block,
+   leaving the design body untouched — requirement-6 linkage, so the spec points at the work that implements it.
 
 8. **Report.** Print the created `[Task]` issue numbers and URLs in dependency order, and confirm the spec's
    `tasks:` was backfilled.
